@@ -1,5 +1,15 @@
 plugins {
     id 'java'
+    id 'application'
+    id 'distribution'
+}
+
+application {
+    mainClass = 'hexlet.code.App'
+}
+
+compileJava {
+    options.release = 17
 }
 
 group 'hexlet.code'

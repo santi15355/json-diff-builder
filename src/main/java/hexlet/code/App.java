@@ -15,14 +15,21 @@ import java.util.concurrent.Callable;
         description = "Compares two configuration files and shows a difference.")
 public class App implements Callable {
 
-    //@Option(names = { "-h", "--help" }, description = "Show this help message and exit.")
-    //String option;
+    @Option(names = {"-f", "--format"}, defaultValue = "stylish",
+            description = "output format [default: ${DEFAULT-VALUE}]", paramLabel = "format")
+    private String outputFormat;
 
-    //@Option(names = { "-V", "--version" }, description = "Print version information and exit.")
+    @Parameters(index = "0", description = "path to first file", paramLabel = "filepath1")
+    private String pathToFirstString;
+
+    @Parameters(index = "1", description = "path to second file", paramLabel = "filepath2")
+    private String pathToSecondString;
+
     public static void main(String... args) {
         int exitCode = new CommandLine(new App()).execute(args);
         System.exit(exitCode);
     }
+
     @Override
     public Object call() throws Exception {
         return null;

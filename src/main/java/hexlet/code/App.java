@@ -5,10 +5,7 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
-import java.io.File;
-import java.math.BigInteger;
-import java.nio.file.Files;
-import java.security.MessageDigest;
+import java.io.IOException;
 import java.util.concurrent.Callable;
 
 @Command(name = "gendiff", mixinStandardHelpOptions = true, version = "gendiff 0.1",
@@ -32,6 +29,12 @@ public class App implements Callable {
 
     @Override
     public Object call() throws Exception {
+        try {
+            String diffString = Differ.generate(pathToFirstString, pathToSecondString);
+            System.out.println(diffString);
+        } catch (IOException d) {
+            System.out.println(d.getMessage());
+        }
         return null;
     }
 }

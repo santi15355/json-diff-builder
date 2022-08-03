@@ -10,7 +10,7 @@ import java.util.concurrent.Callable;
 
 @Command(name = "gendiff", mixinStandardHelpOptions = true, version = "gendiff 0.1",
         description = "Compares two configuration files and shows a difference.")
-public class App implements Callable {
+public class App implements Callable<String> {
 
     @Option(names = {"-f", "--format"}, defaultValue = "stylish",
             description = "output format [default: ${DEFAULT-VALUE}]", paramLabel = "format")
@@ -28,7 +28,7 @@ public class App implements Callable {
     }
 
     @Override
-    public Object call() throws Exception {
+    public final String call() throws Exception {
         try {
             String diffString = Differ.generate(pathToFirstString, pathToSecondString);
             System.out.println(diffString);

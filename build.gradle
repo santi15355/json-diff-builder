@@ -3,6 +3,8 @@ plugins {
     id 'application'
     id 'distribution'
     id 'checkstyle'
+    id 'jacoco'
+    id 'com.adarshr.test-logger' version '3.1.0'
 }
 
 application {
@@ -34,4 +36,19 @@ checkstyle {
 
 test {
     useJUnitPlatform()
+}
+
+testlogger {
+    showStandardStreams true
+}
+
+jacocoTestReport {
+    reports {
+        xml.required = true
+    }
+}
+
+jacoco {
+    toolVersion = "0.8.8"
+    reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
 }

@@ -1,7 +1,6 @@
 import hexlet.code.Differ;
 import org.junit.jupiter.api.Test;
 
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -12,6 +11,7 @@ public class DifferTest {
     public static String getExpected(String fileName) throws IOException {
         return Files.readString(Path.of("./src/test/resources/expected"));
     }
+
     @Test
     public void differNormalTest() throws IOException {
         var actual = Differ.generate("/home/vasiliy/file1.json", "/home/vasiliy/file2.json");

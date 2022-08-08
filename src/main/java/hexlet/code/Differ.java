@@ -22,8 +22,8 @@ public class Differ {
         Path firstPath = Path.of(firstFilePath);
         Path secondPath = Path.of(secondFilePath);
         ObjectMapper mapper = new ObjectMapper();
-        Map<String, Object> firstMap = mapper.readValue(getFileReader(firstPath), new TypeReference<>() {});
-        Map<String, Object> secondMap = mapper.readValue(getFileReader(secondPath), new TypeReference<>() {});
+        Map<String, Object> firstMap = mapper.readValue(getFileReader(firstPath), new TypeReference<>() { });
+        Map<String, Object> secondMap = mapper.readValue(getFileReader(secondPath), new TypeReference<>() { });
         Map<String, Object> map = new LinkedHashMap<>();
         var allKeys = getSortedKeys(firstMap, secondMap);
         for (String key : allKeys) {

@@ -36,19 +36,18 @@ checkstyle {
 
 test {
     useJUnitPlatform()
-}
-
-testlogger {
-    showStandardStreams true
+    finalizedBy jacocoTestReport
 }
 
 jacocoTestReport {
+    dependsOn test
     reports {
         xml.required = true
+        csv.required = false
+        html.outputLocation = layout.buildDirectory.dir('jacoco')
     }
 }
 
 jacoco {
-    toolVersion = "0.8.8"
-    reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
+    toolVersion = "0.8.7"
 }

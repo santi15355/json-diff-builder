@@ -14,7 +14,8 @@ public class DifferTest {
 
     @Test
     public void differNormalTest() throws IOException {
-        var actual = Differ.generate("/home/vasiliy/file1.json", "/home/vasiliy/file2.json");
+        var actual = Differ.generate("./src/test/resources/testFiles/file1.json",
+                "./src/test/resources/testFiles/file2.json");
         var expected = """
                 {
                   - follow: false

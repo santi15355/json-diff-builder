@@ -15,25 +15,25 @@ public class Differ {
             throws IOException {
         Map<String, Object> firstMap = Parser.parser(firstFilePath);
         Map<String, Object> secondMap = Parser.parser(secondFilePath);
-        Map<String, Object> map = new LinkedHashMap<>();
+        Map<String, Object> resultMap = new LinkedHashMap<>();
         var allKeys = getSortedKeys(firstMap, secondMap);
         for (String key : allKeys) {
             if (firstMap.containsKey(key) && !secondMap.containsKey(key)) {
-                map.put("- " + key, firstMap.get(key));
+                resultMap.put("- " + key, firstMap.get(key));
             } else if (!firstMap.containsKey(key) && secondMap.containsKey(key)) {
-                map.put("+ " + key, secondMap.get(key));
+                resultMap.put("+ " + key, secondMap.get(key));
             } else if (firstMap.containsKey(key) && secondMap.containsKey(key)) {
                 if (!firstMap.get(key).equals(secondMap.get(key))) {
-                    map.put("- " + key, firstMap.get(key));
-                    map.put("+ " + key, secondMap.get(key));
+                    resultMap.put("- " + key, firstMap.get(key));
+                    resultMap.put("+ " + key, secondMap.get(key));
                 } else {
-                    map.put("  " + key, secondMap.get(key));
+                    resultMap.put("  " + key, secondMap.get(key));
                 }
             } else {
-                map.put("  " + key, secondMap.get(key));
+                resultMap.put("  " + key, secondMap.get(key));
             }
         }
-        return printDiff(map);
+        return printDiff(resultMap);
 
     }
 

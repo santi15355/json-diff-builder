@@ -28,6 +28,7 @@ dependencies {
     implementation 'info.picocli:picocli:4.6.3'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.3'
     testImplementation 'org.assertj:assertj-core:3.23.1'
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.13.3'
 }
 
 checkstyle {

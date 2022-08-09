@@ -1,12 +1,6 @@
 package hexlet.code;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -19,11 +13,8 @@ import java.util.stream.Collectors;
 public class Differ {
     public static String generate(String firstFilePath, String secondFilePath)
             throws IOException {
-        Path firstPath = Path.of(firstFilePath);
-        Path secondPath = Path.of(secondFilePath);
-        ObjectMapper mapper = new ObjectMapper();
-        Map<String, Object> firstMap = mapper.readValue(getFileReader(firstPath), new TypeReference<>() { });
-        Map<String, Object> secondMap = mapper.readValue(getFileReader(secondPath), new TypeReference<>() { });
+        Map<String, Object> firstMap = Parser.parser(firstFilePath);
+        Map<String, Object> secondMap = Parser.parser(secondFilePath);
         Map<String, Object> map = new LinkedHashMap<>();
         var allKeys = getSortedKeys(firstMap, secondMap);
         for (String key : allKeys) {
@@ -42,12 +33,8 @@ public class Differ {
                 map.put("  " + key, secondMap.get(key));
             }
         }
-        return getPrint(map);
+        return printDiff(map);
 
-    }
-
-    private static FileReader getFileReader(Path path) throws FileNotFoundException {
-        return new FileReader(path.toFile());
     }
 
     private static List<String> getSortedKeys(Map<String, Object> firstMap, Map<String, Object> secondMap) {
@@ -65,7 +52,7 @@ public class Differ {
         return allKeys;
     }
 
-    private static String getPrint(Map<String, Object> map) {
+    private static String printDiff(Map<String, Object> map) {
         return map.keySet().stream()
                 .map(key -> "  " + key + ": " + map.get(key) + "\n")
                 .collect(Collectors.joining("", "{" + "\n", "}"));

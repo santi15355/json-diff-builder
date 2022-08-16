@@ -13,24 +13,22 @@ import java.util.stream.Collectors;
 public class Differ {
     public static String generate(String firstFilePath, String secondFilePath)
             throws IOException {
-        Map<String, Object> firstMap = Parser.parser(firstFilePath);
-        Map<String, Object> secondMap = Parser.parser(secondFilePath);
+        Map<String, Object> map1 = Parser.parser(firstFilePath);
+        Map<String, Object> map2 = Parser.parser(secondFilePath);
         Map<String, Object> resultMap = new LinkedHashMap<>();
-        var allKeys = getSortedKeys(firstMap, secondMap);
+        var allKeys = getSortedKeys(map1, map2);
         for (String key : allKeys) {
-            if (firstMap.containsKey(key) && !secondMap.containsKey(key)) {
-                resultMap.put("- " + key, firstMap.get(key));
-            } else if (!firstMap.containsKey(key) && secondMap.containsKey(key)) {
-                resultMap.put("+ " + key, secondMap.get(key));
-            } else if (firstMap.containsKey(key) && secondMap.containsKey(key)) {
-                if (!firstMap.get(key).equals(secondMap.get(key))) {
-                    resultMap.put("- " + key, firstMap.get(key));
-                    resultMap.put("+ " + key, secondMap.get(key));
-                } else {
-                    resultMap.put("  " + key, secondMap.get(key));
-                }
+            if (map1.containsKey(key) && !map2.containsKey(key)) {
+                resultMap.put("- " + key, map1.get(key));
+            } else if (!map1.containsKey(key) && map2.containsKey(key)) {
+                resultMap.put("+ " + key, map2.get(key));
+            } else if (map1.get(key) == null && map2.get(key) == null) {
+                resultMap.put("  " + key, map1.get(key));
+            } else if ((map1.get(key) != null && map2.get(key) != null) && (map1.get(key).equals(map2.get(key)))) {
+                resultMap.put("  " + key, map1.get(key));
             } else {
-                resultMap.put("  " + key, secondMap.get(key));
+                resultMap.put("- " + key, map1.get(key));
+                resultMap.put("+ " + key, map2.get(key));
             }
         }
         return printDiff(resultMap);

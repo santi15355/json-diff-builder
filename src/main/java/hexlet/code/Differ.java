@@ -1,37 +1,34 @@
 package hexlet.code;
 
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class Differ {
-    public static String generate(String firstFilePath, String secondFilePath)
-            throws IOException {
+    public static String generate(String firstFilePath, String secondFilePath, String format)
+            throws Exception {
         Map<String, Object> map1 = Parser.parser(firstFilePath);
         Map<String, Object> map2 = Parser.parser(secondFilePath);
-        Map<String, Object> resultMap = new LinkedHashMap<>();
+        List<Map<String, List<Object>>> diffTree = new ArrayList<>();
         var allKeys = getSortedKeys(map1, map2);
         for (String key : allKeys) {
             if (map1.containsKey(key) && !map2.containsKey(key)) {
-                resultMap.put("- " + key, map1.get(key));
+                diffTree.add(Map.of("removed", Arrays.asList(key, map1.get(key))));
             } else if (!map1.containsKey(key) && map2.containsKey(key)) {
-                resultMap.put("+ " + key, map2.get(key));
+                diffTree.add(Map.of("added", Arrays.asList(key, map2.get(key))));
             } else if (map1.get(key) == null && map2.get(key) == null) {
-                resultMap.put("  " + key, map1.get(key));
+                diffTree.add(Map.of("unchanged", Arrays.asList(key, map1.get(key))));
             } else if ((map1.get(key) != null && map2.get(key) != null) && (map1.get(key).equals(map2.get(key)))) {
-                resultMap.put("  " + key, map1.get(key));
+                diffTree.add(Map.of("unchanged", Arrays.asList(key, map1.get(key))));
             } else {
-                resultMap.put("- " + key, map1.get(key));
-                resultMap.put("+ " + key, map2.get(key));
+                diffTree.add(Map.of("updated", Arrays.asList(key, map2.get(key), map1.get(key))));
             }
         }
-        return printDiff(resultMap);
+        return Formatter.format(diffTree, format);
 
     }
 
@@ -48,11 +45,5 @@ public class Differ {
         List<String> allKeys = new ArrayList<>(keys1);
         Collections.sort(allKeys);
         return allKeys;
-    }
-
-    private static String printDiff(Map<String, Object> map) {
-        return map.keySet().stream()
-                .map(key -> "  " + key + ": " + map.get(key) + "\n")
-                .collect(Collectors.joining("", "{" + "\n", "}"));
     }
 }

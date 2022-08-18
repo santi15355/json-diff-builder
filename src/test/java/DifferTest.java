@@ -13,9 +13,9 @@ public class DifferTest {
     }
 
     @Test
-    public void differNormalTest() throws IOException {
+    public void differNormalTest() throws Exception {
         var actual = Differ.generate("./src/test/resources/testFiles/file1.json",
-                "./src/test/resources/testFiles/file2.json");
+                "./src/test/resources/testFiles/file2.json", "stylish");
         var expected = """
                 {
                   - follow: false
@@ -23,7 +23,7 @@ public class DifferTest {
                   - proxy: 123.234.53.22
                   - timeout: 50
                   + timeout: 20
-                  + verbose: true
+                  + verbose:true
                 }""";
         assertThat(actual).isEqualTo(expected);
     }

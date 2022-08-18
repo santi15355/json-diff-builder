@@ -14,7 +14,7 @@ public class App implements Callable<String> {
 
     @Option(names = {"-f", "--format"}, defaultValue = "stylish",
             description = "output format [default: ${DEFAULT-VALUE}]", paramLabel = "format")
-    private String outputFormat;
+    private String format = "stylish";
 
     @Parameters(index = "0", description = "path to first file", paramLabel = "filepath1")
     private String pathToFirstString;
@@ -30,7 +30,7 @@ public class App implements Callable<String> {
     @Override
     public final String call() throws Exception {
         try {
-            String diffString = Differ.generate(pathToFirstString, pathToSecondString);
+            String diffString = Differ.generate(pathToFirstString, pathToSecondString, format);
             System.out.println(diffString);
         } catch (IOException d) {
             System.out.println(d.getMessage());

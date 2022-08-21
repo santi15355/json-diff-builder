@@ -17,6 +17,14 @@ public class Differ {
         return Formatter.format(diffList, format);
     }
 
+    public static String generate(String firstFilePath, String secondFilePath)
+            throws Exception {
+        Map<String, Object> map1 = Parser.parser(firstFilePath);
+        Map<String, Object> map2 = Parser.parser(secondFilePath);
+        List<Map<String, List<Object>>> diffList = new ArrayList<>(diffBuilder(map1, map2));
+        return Formatter.format(diffList, "stylish");
+    }
+
     public static List<Map<String, List<Object>>> diffBuilder(Map<String, Object> map1, Map<String, Object> map2)
             throws Exception {
         List<Map<String, List<Object>>> diffTree = new ArrayList<>();

@@ -16,6 +16,7 @@ public class App implements Callable<String> {
             description = "output format [default: ${DEFAULT-VALUE}]", paramLabel = "format")
     private String format = "stylish";
 
+
     @Parameters(index = "0", description = "path to first file", paramLabel = "filepath1")
     private String pathToFirstString;
 

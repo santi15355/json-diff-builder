@@ -23,7 +23,9 @@ public class DifferTest {
 
     @BeforeAll
     public static void beforeAll() throws IOException {
-        expectedStylish = Files.readString(Paths.get("./src/test/resources/expectedStylish.txt"));
+        expectedStylish = Files.readString(Paths.get("./src/test/resources/expectedStylish.txt")).trim();
+        expectedPlain = Files.readString(Paths.get("./src/test/resources/expectedPlain.txt")).trim();
+        expectedJson = Files.readString(Paths.get("./src/test/resources/expectedJson.txt")).trim();
     }
 
     @Test
@@ -39,6 +41,29 @@ public class DifferTest {
 
         var actual4 = Differ.generate(pathYml1, pathYml2, "stylish");
         assertThat(actual3).isEqualTo(expectedStylish);
+    }
+    @Test
+    public void differTestPlain() throws Exception {
+        var actual = Differ.generate(pathJson1, pathJson2, "plain");
+        assertThat(actual).isEqualTo(expectedPlain);
+
+        var actual2 = Differ.generate(pathYml1, pathYml2, "plain");
+        assertThat(actual2).isEqualTo(expectedPlain);
+
+        var actual3 = Differ.generate(pathJson1, pathYml2, "plain");
+        assertThat(actual2).isEqualTo(expectedPlain);
+    }
+
+    @Test
+    public void differTestJson() throws Exception {
+        var actual = Differ.generate(pathJson1, pathJson2, "json");
+        assertThat(actual).isEqualTo(expectedJson);
+
+        var actual2 = Differ.generate(pathYml1, pathYml2, "json");
+        assertThat(actual2).isEqualTo(expectedJson);
+
+        var actual3 = Differ.generate(pathJson1, pathYml2, "json");
+        assertThat(actual2).isEqualTo(expectedJson);
     }
 
     @Test

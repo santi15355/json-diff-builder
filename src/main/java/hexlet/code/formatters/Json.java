@@ -8,6 +8,6 @@ import java.util.Map;
 
 public class Json {
     public static String format(List<Map<String, List<Object>>> diffTree) throws JsonProcessingException {
-        return new ObjectMapper().writeValueAsString(diffTree);
+        return new ObjectMapper().writeValueAsString(diffTree).trim();
     }
 }

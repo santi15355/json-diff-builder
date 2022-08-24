@@ -27,7 +27,7 @@ public class Stylish {
             }
         }
         stylish.append("}");
-        return stylish.toString();
+        return stylish.toString().trim();
     }
 
 }

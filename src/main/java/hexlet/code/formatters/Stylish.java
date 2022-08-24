@@ -10,7 +10,7 @@ public class Stylish {
         for (Map<String, List<Object>> element : diffTree) {
             for (Map.Entry<String, List<Object>> flag : element.entrySet()) {
                 switch (flag.getKey()) {
-                    case "added" -> stylish.append("  + ").append(flag.getValue().get(0)).append(":")
+                    case "added" -> stylish.append("  + ").append(flag.getValue().get(0)).append(": ")
                             .append(flag.getValue().get(1)).append("\n");
                     case "removed" -> stylish.append("  - ").append(flag.getValue().get(0)).append(": ")
                             .append(flag.getValue().get(1)).append("\n");

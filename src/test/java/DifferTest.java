@@ -2,12 +2,14 @@ import hexlet.code.Differ;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class DifferTest {
 
@@ -42,6 +44,7 @@ public class DifferTest {
         var actual4 = Differ.generate(pathYml1, pathYml2, "stylish");
         assertThat(actual3).isEqualTo(expectedStylish);
     }
+
     @Test
     public void differTestPlain() throws Exception {
         var actual = Differ.generate(pathJson1, pathJson2, "plain");
@@ -73,5 +76,24 @@ public class DifferTest {
         });
         assertThat(thrown).isInstanceOf(Exception.class);
 
+    }
+
+    @Test
+    public void testExceptions() {
+        // wrong format
+        assertThrows(RuntimeException.class, () ->
+                Differ.generate(pathJson1, pathJson2, "otherFormat"));
+
+        // missing file
+        assertThrows(FileNotFoundException.class, () ->
+                Differ.generate(pathJson1, "./src/test/resources/File.json"));
+
+        //no extension
+        assertThrows(RuntimeException.class, () ->
+                Differ.generate("./src/test/resources/example1", "./src/test/resources/example2"));
+
+        //wrong extension
+        assertThrows(RuntimeException.class, () ->
+                Differ.generate(pathJson1, "./src/test/resources/example2.wrong", "stylish"));
     }
 }

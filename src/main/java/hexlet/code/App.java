@@ -18,10 +18,10 @@ public class App implements Callable<String> {
 
 
     @Parameters(index = "0", description = "path to first file", paramLabel = "filepath1")
-    private String pathToFirstString;
+    private String filepath1;
 
     @Parameters(index = "1", description = "path to second file", paramLabel = "filepath2")
-    private String pathToSecondString;
+    private String filepath2;
 
     public static void main(String... args) {
         int exitCode = new CommandLine(new App()).execute(args);
@@ -31,7 +31,7 @@ public class App implements Callable<String> {
     @Override
     public final String call() throws Exception {
         try {
-            String diffString = Differ.generate(pathToFirstString, pathToSecondString, format);
+            String diffString = Differ.generate(filepath1, filepath2, format);
             System.out.println(diffString);
         } catch (IOException d) {
             System.out.println(d.getMessage());

@@ -12,20 +12,18 @@ import java.util.Map;
 
 public class Parser {
 
-    public static Map<String, Object> parser(String filePath)
+    public static Map<String, Object> parser(String filePath, String extension)
             throws IOException {
         ObjectMapper jsonMapper = new ObjectMapper();
         ObjectMapper ymlMapper = new ObjectMapper(new YAMLFactory());
 
-        if (filePath.endsWith("json")) {
-            return jsonMapper.readValue(getFileReader(Path.of(filePath)), new TypeReference<>() {
+        return switch (extension) {
+            case "json" -> jsonMapper.readValue(filePath, new TypeReference<>() {
             });
-        } else if (filePath.endsWith("yml") | filePath.endsWith("yaml")) {
-            return ymlMapper.readValue(getFileReader(Path.of(filePath)), new TypeReference<>() {
+            case "yml", "yaml" -> ymlMapper.readValue(filePath, new TypeReference<>() {
             });
-        } else {
-            throw new RuntimeException("File extension not detected");
-        }
+            default -> throw new RuntimeException("File extension not detected");
+        };
     }
 
     private static FileReader getFileReader(Path path) throws FileNotFoundException {

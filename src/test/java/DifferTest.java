@@ -2,9 +2,8 @@ import hexlet.code.Differ;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,10 +20,9 @@ public class DifferTest {
     private final String pathYml1 = "./src/test/resources/example1.yml";
     private final String pathYml2 = "./src/test/resources/example2.yml";
     private final String emptyFile = "./src/test/resources/emptyFile.json";
-    private Exception expected;
 
     @BeforeAll
-    public static void beforeAll() throws IOException {
+    public static void beforeAll() throws Exception {
         expectedStylish = Files.readString(Paths.get("./src/test/resources/expectedStylish.txt")).trim();
         expectedPlain = Files.readString(Paths.get("./src/test/resources/expectedPlain.txt")).trim();
         expectedJson = Files.readString(Paths.get("./src/test/resources/expectedJson.txt")).trim();
@@ -85,15 +83,15 @@ public class DifferTest {
                 Differ.generate(pathJson1, pathJson2, "otherFormat"));
 
         // missing file
-        assertThrows(FileNotFoundException.class, () ->
+        assertThrows(Exception.class, () ->
                 Differ.generate(pathJson1, "./src/test/resources/File.json"));
 
         //no extension
-        assertThrows(RuntimeException.class, () ->
+        assertThrows(NoSuchFileException.class, () ->
                 Differ.generate("./src/test/resources/example1", "./src/test/resources/example2"));
 
         //wrong extension
         assertThrows(RuntimeException.class, () ->
-                Differ.generate(pathJson1, "./src/test/resources/example2.wrong", "stylish"));
+                Differ.generate(pathJson1, "./src/test/resources/example2.tyt", "stylish"));
     }
 }

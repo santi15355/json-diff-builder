@@ -8,8 +8,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class DiffBuilder {
-    public static List<Map<String, List<Object>>> buildDiff(Map<String, Object> map1, Map<String, Object> map2)
-            throws Exception {
+    public static List<Map<String, List<Object>>> buildDiff(Map<String, Object> map1, Map<String, Object> map2) {
         List<Map<String, List<Object>>> diffTree = new ArrayList<>();
         var allKeys = getSortedKeys(map1, map2);
         for (String key : allKeys) {

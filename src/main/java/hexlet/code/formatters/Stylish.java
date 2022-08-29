@@ -9,18 +9,15 @@ public class Stylish {
         StringBuilder stylish = new StringBuilder("{\n");
         for (Map<String, List<Object>> element : diffTree) {
             for (Map.Entry<String, List<Object>> flag : element.entrySet()) {
+                var key = flag.getValue();
+                var value = flag.getValue();
                 switch (flag.getKey()) {
-                    case "added" -> stylish.append("  + ").append(flag.getValue().get(0)).append(": ")
-                            .append(flag.getValue().get(1)).append("\n");
-                    case "removed" -> stylish.append("  - ").append(flag.getValue().get(0)).append(": ")
-                            .append(flag.getValue().get(1)).append("\n");
-                    case "unchanged" -> stylish.append("    ").append(flag.getValue().get(0)).append(": ")
-                            .append(flag.getValue().get(1)).append("\n");
+                    case "added" -> stylish.append(String.format("  + %s: %s\n", key.get(0), value.get(1)));
+                    case "removed" -> stylish.append(String.format("  - %s: %s\n", key.get(0), value.get(1)));
+                    case "unchanged" -> stylish.append(String.format("    %s: %s\n", key.get(0), value.get(1)));
                     case "updated" -> {
-                        stylish.append("  - ").append(flag.getValue().get(0)).append(": ")
-                                .append(flag.getValue().get(2)).append("\n");
-                        stylish.append("  + ").append(flag.getValue().get(0)).append(": ")
-                                .append(flag.getValue().get(1)).append("\n");
+                        stylish.append(String.format("  - %s: %s\n", key.get(0), value.get(2)));
+                        stylish.append(String.format("  + %s: %s\n", key.get(0), value.get(1)));
                     }
                     default -> throw new IllegalStateException("Unexpected value: " + flag.getKey());
                 }

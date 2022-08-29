@@ -9,17 +9,19 @@ public class Plain {
         StringBuilder plain = new StringBuilder();
         for (Map<String, List<Object>> element : diffTree) {
             for (Map.Entry<String, List<Object>> flag : element.entrySet()) {
+                var key = flag.getValue();
+                var value = flag.getValue();
                 switch (flag.getKey()) {
-                    case "added" -> plain.append("Property ").append(printObject(flag.getValue().get(0)))
+                    case "added" -> plain.append("Property ").append(printObject(key.get(0)))
                             .append(" was added with value: ")
-                            .append(printObject(flag.getValue().get(1))).append("\n");
-                    case "removed" -> plain.append("Property ").append(printObject(flag.getValue().get(0)))
+                            .append(printObject(value.get(1))).append("\n");
+                    case "removed" -> plain.append("Property ").append(printObject(key.get(0)))
                             .append(" was removed").append("\n");
                     case "updated" -> {
-                        plain.append("Property ").append(printObject(flag.getValue().get(0)))
+                        plain.append("Property ").append(printObject(key.get(0)))
                                 .append(" was updated. From ")
-                                .append(printObject(flag.getValue().get(2))).append(" to ")
-                                .append(printObject(flag.getValue().get(1))).append("\n");
+                                .append(printObject(value.get(2))).append(" to ")
+                                .append(printObject(value.get(1))).append("\n");
                     }
                     default -> {
                     }

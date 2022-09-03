@@ -8,17 +8,15 @@ import java.util.Map;
 
 public class Parser {
 
-    public static Map<String, Object> parser(String filePath, String extension)
+    public static Map<String, Object> parser(String data, String extension)
             throws Exception {
-        ObjectMapper jsonMapper = new ObjectMapper();
-        ObjectMapper ymlMapper = new ObjectMapper(new YAMLFactory());
 
         if (extension.endsWith(".json")) {
-            return jsonMapper.readValue(filePath, new TypeReference<>() {
+            return new ObjectMapper().readValue(data, new TypeReference<>() {
             });
         }
-        if (extension.endsWith(".yml") | filePath.endsWith(".yaml")) {
-            return ymlMapper.readValue(filePath, new TypeReference<>() {
+        if (extension.endsWith(".yml") | extension.endsWith(".yaml")) {
+            return new ObjectMapper(new YAMLFactory()).readValue(data, new TypeReference<>() {
             });
         } else {
             throw new RuntimeException("File extension not detected");

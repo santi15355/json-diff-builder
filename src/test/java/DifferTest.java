@@ -3,7 +3,6 @@ import hexlet.code.Formatter;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
@@ -86,8 +85,8 @@ public class DifferTest {
     public void testFormatterStylish() {
         List<Map<String, List<Object>>> testDiff = new ArrayList<>();
         List<Object> list = new ArrayList<>();
-        list.add(0,"char");
-        list.add(1,"char1");
+        list.add(0, "char");
+        list.add(1, "char1");
         Map<String, List<Object>> map = new HashMap<>();
         map.put("none", list);
         testDiff.add(map);
@@ -99,8 +98,8 @@ public class DifferTest {
     public void testFormatterPlain() {
         List<Map<String, List<Object>>> testDiff = new ArrayList<>();
         List<Object> list = new ArrayList<>();
-        list.add(0,"char");
-        list.add(1,"char1");
+        list.add(0, "char");
+        list.add(1, "char1");
         Map<String, List<Object>> map = new HashMap<>();
         map.put("none", list);
         testDiff.add(map);

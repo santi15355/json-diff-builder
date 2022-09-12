@@ -13,19 +13,16 @@ public class Plain {
                 var value = flag.getValue();
                 switch (flag.getKey()) {
                     case "unchanged" -> {
-                        continue;
                     }
                     case "added" -> plain.append("Property ").append(printObject(key.get(0)))
                             .append(" was added with value: ")
                             .append(printObject(value.get(1))).append("\n");
                     case "removed" -> plain.append("Property ").append(printObject(key.get(0)))
                             .append(" was removed").append("\n");
-                    case "updated" -> {
-                        plain.append("Property ").append(printObject(key.get(0)))
-                                .append(" was updated. From ")
-                                .append(printObject(value.get(2))).append(" to ")
-                                .append(printObject(value.get(1))).append("\n");
-                    }
+                    case "updated" -> plain.append("Property ").append(printObject(key.get(0)))
+                            .append(" was updated. From ")
+                            .append(printObject(value.get(2))).append(" to ")
+                            .append(printObject(value.get(1))).append("\n");
                     default -> throw new IllegalStateException("Unexpected value: " + flag.getKey());
 
                 }

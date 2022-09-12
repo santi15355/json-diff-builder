@@ -1,6 +1,6 @@
 package hexlet.code.formatters;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +12,9 @@ public class Plain {
                 var key = flag.getValue();
                 var value = flag.getValue();
                 switch (flag.getKey()) {
+                    case "unchanged" -> {
+                        continue;
+                    }
                     case "added" -> plain.append("Property ").append(printObject(key.get(0)))
                             .append(" was added with value: ")
                             .append(printObject(value.get(1))).append("\n");
@@ -23,21 +26,19 @@ public class Plain {
                                 .append(printObject(value.get(2))).append(" to ")
                                 .append(printObject(value.get(1))).append("\n");
                     }
-                    default -> {
-                    }
+                    default -> throw new IllegalStateException("Unexpected value: " + flag.getKey());
+
                 }
             }
         }
         return plain.toString().trim();
     }
 
-    private static Object printObject(Object obj) {
-        if (obj instanceof Integer || obj == null || obj instanceof Boolean) {
-            return obj;
-        } else if (obj instanceof ArrayList || obj instanceof Map) {
-            return "[complex value]";
-        } else {
-            return "'" + obj + "'";
-        }
+    private static String printObject(Object obj) {
+        return obj instanceof Object[] || obj instanceof Collection || obj instanceof Map
+                ? "[complex value]"
+                : obj instanceof String
+                ? "'" + obj + "'"
+                : String.valueOf(obj);
     }
 }

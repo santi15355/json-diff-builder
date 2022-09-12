@@ -14,7 +14,7 @@ public class Formatter {
             case "stylish" -> Stylish.format(diffTree);
             case "plain" -> Plain.format(diffTree);
             case "json" -> Json.format(diffTree);
-            default -> throw new RuntimeException("incorrect format: " + format);
+            default -> throw new IllegalStateException("Unexpected value: " + format);
         };
     }
 }

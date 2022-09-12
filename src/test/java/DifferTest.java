@@ -1,10 +1,16 @@
 import hexlet.code.Differ;
+import hexlet.code.Formatter;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
@@ -40,7 +46,7 @@ public class DifferTest {
         assertThat(actual3).isEqualTo(expectedStylish);
 
         var actual4 = Differ.generate(pathYml1, pathYml2, "stylish");
-        assertThat(actual3).isEqualTo(expectedStylish);
+        assertThat(actual4).isEqualTo(expectedStylish);
     }
 
     @Test
@@ -52,7 +58,7 @@ public class DifferTest {
         assertThat(actual2).isEqualTo(expectedPlain);
 
         var actual3 = Differ.generate(pathJson1, pathYml2, "plain");
-        assertThat(actual2).isEqualTo(expectedPlain);
+        assertThat(actual3).isEqualTo(expectedPlain);
     }
 
     @Test
@@ -64,7 +70,7 @@ public class DifferTest {
         assertThat(actual2).isEqualTo(expectedJson);
 
         var actual3 = Differ.generate(pathJson1, pathYml2, "json");
-        assertThat(actual2).isEqualTo(expectedJson);
+        assertThat(actual3).isEqualTo(expectedJson);
     }
 
     @Test
@@ -75,6 +81,33 @@ public class DifferTest {
         assertThat(thrown).isInstanceOf(Exception.class);
 
     }
+
+    @Test
+    public void testFormatterStylish() {
+        List<Map<String, List<Object>>> testDiff = new ArrayList<>();
+        List<Object> list = new ArrayList<>();
+        list.add(0,"char");
+        list.add(1,"char1");
+        Map<String, List<Object>> map = new HashMap<>();
+        map.put("none", list);
+        testDiff.add(map);
+        assertThrows(IllegalStateException.class, () ->
+                Formatter.format(testDiff, "stylish"));
+    }
+
+    @Test
+    public void testFormatterPlain() {
+        List<Map<String, List<Object>>> testDiff = new ArrayList<>();
+        List<Object> list = new ArrayList<>();
+        list.add(0,"char");
+        list.add(1,"char1");
+        Map<String, List<Object>> map = new HashMap<>();
+        map.put("none", list);
+        testDiff.add(map);
+        assertThrows(IllegalStateException.class, () ->
+                Formatter.format(testDiff, "plain"));
+    }
+
 
     @Test
     public void testExceptions() {

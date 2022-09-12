@@ -24,6 +24,7 @@ public class DiffBuilder {
                 diffTree.add(Map.of("updated", Arrays.asList(key, map2.get(key), map1.get(key))));
             }
         }
+        System.out.println(diffTree);
         return diffTree;
     }
 

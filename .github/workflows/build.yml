@@ -1,4 +1,4 @@
-name: actions-differ
+name: build
 
 on: [ push ]
 

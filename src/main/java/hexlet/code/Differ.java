@@ -1,8 +1,6 @@
 package hexlet.code;
 
-import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +23,7 @@ public class Differ {
             throws Exception {
         return generate(firstFilePath, secondFilePath, "stylish");
     }
+
     private static String getDataFormat(String filePath) {
         int index = filePath.lastIndexOf('.');
         return index > 0

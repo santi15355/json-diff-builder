@@ -74,19 +74,17 @@ public class DifferTest {
 
     @Test
     public void differTestEmptyFile() {
-        Throwable thrown = catchThrowable(() -> {
-            Differ.generate(pathJson1, emptyFile);
-        });
+        Throwable thrown = catchThrowable(() -> Differ.generate(pathJson1, emptyFile));
         assertThat(thrown).isInstanceOf(Exception.class);
 
     }
 
     @Test
-    public void testFormatterStylish() {
+    public void testFormatStylish() {
         List<Map<String, List<Object>>> testDiff = new ArrayList<>();
         List<Object> list = new ArrayList<>();
-        list.add(0, "char");
-        list.add(1, "char1");
+        list.add(0, "data1");
+        list.add(1, "data2");
         Map<String, List<Object>> map = new HashMap<>();
         map.put("none", list);
         testDiff.add(map);
@@ -95,18 +93,17 @@ public class DifferTest {
     }
 
     @Test
-    public void testFormatterPlain() {
+    public void testFormatPlain() {
         List<Map<String, List<Object>>> testDiff = new ArrayList<>();
         List<Object> list = new ArrayList<>();
-        list.add(0, "char");
-        list.add(1, "char1");
+        list.add(0, "data1");
+        list.add(1, "data2");
         Map<String, List<Object>> map = new HashMap<>();
         map.put("none", list);
         testDiff.add(map);
         assertThrows(IllegalStateException.class, () ->
                 Formatter.format(testDiff, "plain"));
     }
-
 
     @Test
     public void testExceptions() {
